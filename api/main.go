@@ -4,8 +4,10 @@ import (
 	"database/sql"
 	"log"
 	"rest-api-in-gin/internal/database"
-
-	_ "github.com/mattn/go-sqlite3"
+"rest-api-in-gin/internal/env"
+_ "github.com/mattn/go-sqlite3"
+_ "github.com/joho/godotenv/autoload"
+ 
 )
 
 type application struct{
