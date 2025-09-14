@@ -4,10 +4,9 @@ import (
 	"database/sql"
 	"log"
 	"rest-api-in-gin/internal/database"
-"rest-api-in-gin/internal/env"
-_ "github.com/mattn/go-sqlite3"
-_ "github.com/joho/godotenv/autoload"
- 
+	"rest-api-in-gin/internal/env"
+	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type application struct{
@@ -24,10 +23,13 @@ func main (){
 	}
 	defer db.Close()
 	models := database.NewModels(db)
-	app:= &application("PORT",8080),
-	jwtSecret: env.GetEnvString("JWT_SECRET", "some-secret-123456"),
-	models: models,
+	app:= &application{
+		port: env.GetEnvInt("PORT",8080),
+		jwtSecret: env.GetEnvString("JWT_SECRET", "some-secret-123456"),
+		models: models,
+	}
+	if err := app.serve();err !=nil {
+		log.Fatal(err)
+	}
 }
-if err := app.serve();err !=nil 
-log.Fatal(err)
-}}
+
