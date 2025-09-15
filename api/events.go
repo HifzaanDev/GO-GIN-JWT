@@ -169,3 +169,15 @@ func (app *application) addAttendeeToEvent(c *gin.Context) {
 	c.JSON(http.StatusCreated, attendee)
 
 }
+func (app *application) getAttendeesForEvent(c *gin.Context){
+id,err := strconv.Atoi(c.Param("id"))
+if err !=nil{
+	c.JSON(http.StatusBadRequest,gin.H{"error":"Invalid event id"})
+	return
+}
+users,err:=app.models.getAttendeesByEvent(id)
+if err != nil{
+	c.JSON(http.StatusInternalServerError,gin.H{"error":"Failed to retrieve attendee details"})
+}
+c.JSON(http.StatusOK,users)
+}
